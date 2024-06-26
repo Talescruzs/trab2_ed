@@ -17,13 +17,15 @@ int main(){
             printf("Digite valor:\n");
             scanf("%d", &n);
             printf("Inserir %d\n", n);
-            insere(heap, n, tamanho_heap);
+            insere(heap, n, &tamanho_heap);
+            printf("Tamanho do heap = %d\n", tamanho_heap);
         }
         else if(op==2){
             printf("Digite valor:\n");
             scanf("%d", &n);
             printf("Remover %d\n", n);
-            deleta(heap, n, tamanho_heap);
+            deleta(heap, n, &tamanho_heap);
+            printf("Tamanho do heap = %d\n", tamanho_heap);
         }
         else if(op==3){
             for(int i = 0; i<tamanho_heap; i++){
@@ -31,6 +33,7 @@ int main(){
             }
             printf("\n");
             printf("Imprimir heap\n");
+            imprime(heap, 0, tamanho_heap, 0);
         }
         else{
             break;

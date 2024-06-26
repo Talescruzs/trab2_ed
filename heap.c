@@ -58,26 +58,44 @@ void heapify_down(int *heap, int v, int tam){
     }
 }
 
-void insere(int *heap, int valor, int tam){
-    
-    // atualizamos o tamanho da heap e inserimos no fim do array
-    tam++;
-    heap[tam] = valor;
-    
-    // agora, chamamos o heapify_up
-    heapify_up(heap, tam);
+void imprime(int *heap, int pos, int tam, int espacos){
+    int d = direita(pos+1);
+    int e = esquerda(pos+1);
+    // printf("%d %d\n", e, d);
+    if(pos<=tam){
+        for(int i=0; i<espacos; i++){
+            printf("    ");
+        }
+        imprime(heap, e, tam, espacos+1);
+        printf("%d\n", heap[pos]);
+        for(int i=0; i<espacos; i++){
+            printf("    ");
+        }
+        imprime(heap, d, tam, espacos+1);
+        printf("\n");
+    }
 }
 
-void deleta(int *heap, int posicao, int tam){
+void insere(int *heap, int valor, int *tam){
+    
+    // atualizamos o tamanho da heap e inserimos no fim do array
+    heap[*tam] = valor;
+    *tam = (*tam)+1;
+    
+    // agora, chamamos o heapify_up
+    heapify_up(heap, *tam);
+}
+
+void deleta(int *heap, int posicao, int *tam){
     
     // esta função deleta um número e qualquer
     // posição da heap, porém, na prática, só
     // irá ser usada para remover o topo da heap
     
     // trocamos com o número do fim e atualizamos o tamanho
-    swap(&heap[posicao], &heap[tam]);
-    tam--;
+    swap(&heap[posicao], &heap[*tam]);
+    *tam = (*tam)-1;
     
     // chamamos a heapify_down
-    heapify_down(heap, posicao, tam);
+    heapify_down(heap, posicao, *tam);
 }
