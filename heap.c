@@ -2,8 +2,22 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-// codigo de https://noic.com.br/materiais-informatica/curso/aula-16-estruturas-de-dados-iii-heap-fila-de-prioridade/
 
+Heap cria_heap(){
+    Heap h = malloc(sizeof(struct heap));
+    h->tam = 10;
+    h->dados = malloc(sizeof(int)*h->tam);
+    h->pos = 0;
+    return h;
+}
+void dobra_heap(Heap h){
+    h->tam = h->tam*2;
+    h->dados = realloc(h->dados, sizeof(int)*h->tam);
+}
+void corta_heap(Heap h){
+    h->tam = h->tam/2;
+    h->dados = realloc(h->dados, sizeof(int)*h->tam);
+}
 int pai(int i){
     return i/2;
 }
@@ -18,84 +32,85 @@ int direita(int i){
 
 void swap(int *v1, int *v2){
     int temp = *v1;
-    *v2 = *v1;
-    *v1 = temp;
+    *v1 = *v2;
+    *v2 = temp;
 }
 
-void heapify_up(int *heap, int v){
+void heapify_up(Heap h, int pos){
     
-    if(v == 1) return; // se estivermos no topo, fazemos mais nada
-    
-    int p = pai(v);
-    if(heap[v] > heap[p]){
-        
-        // se o valor da posição v for maior que o de seu pai,
-        // temos que fazer a troca dos dois e chamar a função em p
-        
-        swap(&heap[v], &heap[p]);
-        heapify_up(heap, p);
+    if(pos == 0) return;
+
+    int p = pai(pos);
+    if(h->dados[pos] > h->dados[p]){
+        swap(&h->dados[pos], &h->dados[p]);
+        heapify_up(h, p);
     }
 }
 
-void heapify_down(int *heap, int v, int tam){
+void heapify_down(Heap h, int pos){
 
-    int d = direita(v);
-    int e = esquerda(v);
+    int d = direita(pos);
+    int e = esquerda(pos);
     
-    int maior = v; // no fim, maior terá a maior das posições
+    int maior = pos; // no fim, maior terá a maior das posições
     
     // comparamos com cada um dos filhos.
     // temos que checar, também, se os filhos existem
-    if(d <= tam && heap[d] > heap[v]) maior = d;
-    if(e <= tam && heap[e] > heap[maior]) maior = e;
+    if(d < h->pos && h->dados[d] > h->dados[pos]) maior = d;
+    if(e < h->pos && h->dados[e] > h->dados[maior]) maior = e;
     
-    if(maior != v){ 
+    if(maior != pos){ 
         // se v não for o maior, temos que trocar com o maior dos filhos
         // e chamamos a função para ele
-        
-        swap(&heap[v], &heap[maior]);
-        heapify_down(heap, maior, tam);
+        swap(&h->dados[pos], &h->dados[maior]);
+        // swap(&heap[v], &heap[maior]);
+        heapify_down(h, maior);
     }
 }
 
-void imprime(int *heap, int pos, int tam, int espacos){
-    int d = direita(pos+1);
-    int e = esquerda(pos+1);
-    // printf("%d %d\n", e, d);
-    if(pos<=tam){
-        for(int i=0; i<espacos; i++){
-            printf("    ");
-        }
-        imprime(heap, e, tam, espacos+1);
-        printf("%d\n", heap[pos]);
-        for(int i=0; i<espacos; i++){
-            printf("    ");
-        }
-        imprime(heap, d, tam, espacos+1);
-        printf("\n");
+void imprime(Heap h){
+    // int d = direita(pos+1);
+    // int e = esquerda(pos+1);
+    // // printf("%d %d\n", e, d);
+    // if(pos<=tam){
+    //     for(int i=0; i<espacos; i++){
+    //         printf("    ");
+    //     }
+    //     imprime(heap, e, tam, espacos+1);
+    //     printf("%d\n", heap[pos]);
+    //     for(int i=0; i<espacos; i++){
+    //         printf("    ");
+    //     }
+    //     imprime(heap, d, tam, espacos+1);
+    //     printf("\n");
+    // }
+    for(int i = 0; i<h->pos; i++){
+        printf("%d ", h->dados[i]);
     }
+    printf("\n");
 }
 
-void insere(int *heap, int valor, int *tam){
-    
+void insere(Heap h, int v){
     // atualizamos o tamanho da heap e inserimos no fim do array
-    heap[*tam] = valor;
-    *tam = (*tam)+1;
+    if(h->pos>=h->tam){
+        dobra_heap(h);
+    }
+    h->dados[h->pos] = v;
     
-    // agora, chamamos o heapify_up
-    heapify_up(heap, *tam);
+    heapify_up(h, h->pos);
+    h->pos++;
 }
 
-void deleta(int *heap, int posicao, int *tam){
-    
-    // esta função deleta um número e qualquer
-    // posição da heap, porém, na prática, só
-    // irá ser usada para remover o topo da heap
+int remove_heap(Heap h){
     
     // trocamos com o número do fim e atualizamos o tamanho
-    swap(&heap[posicao], &heap[*tam]);
-    *tam = (*tam)-1;
+    int removido = h->dados[0];
+    h->pos--;
+    printf("%d %d\n", h->dados[h->pos], h->dados[0]);
+    swap(&h->dados[h->pos], &h->dados[0]);
+    printf("%d %d\n", h->dados[h->pos], h->dados[0]);
     
     // chamamos a heapify_down
-    heapify_down(heap, posicao, *tam);
+    heapify_down(h, 0);
+    return removido;
 }

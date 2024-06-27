@@ -1,15 +1,16 @@
 #ifndef HEAP_H
 #define HEAP_H
 
-int pai(int i);
-int esquerda(int i);
-int direita(int i);
+typedef struct heap{
+    int tam;
+    int pos;
+    int *dados;
+} *Heap;
 
-void heapify_up(int *heap, int v);
-void heapify_down(int *heap, int v, int tam);
+Heap cria_heap();
 
-void imprime(int *heap, int pos, int tam, int espacos);
-void insere(int *heap, int valor, int *tam);
-void deleta(int *heap, int posicao, int *tam);
+void imprime(Heap h);
+void insere(Heap h, int v);
+int remove_heap(Heap h);
 
 #endif

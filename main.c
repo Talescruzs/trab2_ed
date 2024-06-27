@@ -6,9 +6,9 @@
 #define MAXN 100
 
 int main(){
-    int heap[MAXN];
-    int tamanho_heap = 0;
-
+    // int heap[MAXN];
+    // int tamanho_heap = 0;
+    Heap h = cria_heap();
     int op, n;
     while(1){
         printf("1 - inserir\n2- remover\n3 - imprimir heap\n");
@@ -17,41 +17,28 @@ int main(){
             printf("Digite valor:\n");
             scanf("%d", &n);
             printf("Inserir %d\n", n);
-            insere(heap, n, &tamanho_heap);
-            printf("Tamanho do heap = %d\n", tamanho_heap);
+            insere(h, n);
+            // printf("Tamanho do heap = %d\n", tamanho_heap);
         }
         else if(op==2){
-            printf("Digite valor:\n");
-            scanf("%d", &n);
-            printf("Remover %d\n", n);
-            deleta(heap, n, &tamanho_heap);
-            printf("Tamanho do heap = %d\n", tamanho_heap);
+            // printf("Digite valor:\n");
+            // scanf("%d", &n);
+            printf("Remover %d\n", h->dados[0]);
+            remove_heap(h);
+            // printf("Tamanho do heap = %d\n", tamanho_heap);
         }
         else if(op==3){
-            for(int i = 0; i<tamanho_heap; i++){
-                printf("%d ", heap[i]);
-            }
-            printf("\n");
+            // for(int i = 0; i<tamanho_heap; i++){
+            //     printf("%d ", heap[i]);
+            // }
+            // printf("\n");
             printf("Imprimir heap\n");
-            imprime(heap, 0, tamanho_heap, 0);
+            imprime(h);
         }
         else{
             break;
         }
     }
-    // for(int i = 1;i <= n;i++){
-    //     char operacao;
-    //     scanf(" %c", &operacao);
-    //     if(operacao == 'I'){ // inserir um número
-    //         int valor;
-    //         scanf("%d", &valor);
-    //         insere(valor);
-    //     }
-    //     if(operacao == 'D'){
-    //         printf("%d\n", heap[1]); // imprime o valor do topo
-    //         deleta(1);
-    //     }
-    // }
     
     return 0;
 }
