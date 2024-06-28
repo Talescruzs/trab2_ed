@@ -23,11 +23,11 @@ int pai(int i){
 }
 
 int esquerda(int i){
-    return 2*i;
+    return 2*i+1;
 }
 
 int direita(int i){
-    return 2*i+1;
+    return 2*i+2;
 }
 
 void swap(int *v1, int *v2){
@@ -69,25 +69,27 @@ void heapify_down(Heap h, int pos){
 }
 
 void imprime(Heap h){
-    // int d = direita(pos+1);
-    // int e = esquerda(pos+1);
-    // // printf("%d %d\n", e, d);
-    // if(pos<=tam){
-    //     for(int i=0; i<espacos; i++){
-    //         printf("    ");
-    //     }
-    //     imprime(heap, e, tam, espacos+1);
-    //     printf("%d\n", heap[pos]);
-    //     for(int i=0; i<espacos; i++){
-    //         printf("    ");
-    //     }
-    //     imprime(heap, d, tam, espacos+1);
-    //     printf("\n");
-    // }
-    for(int i = 0; i<h->pos; i++){
-        printf("%d ", h->dados[i]);
+    for(int i=0; i<h->pos; i++){
+        printf("esq %d dir %d pos %d\n", esquerda(i), direita(i), i);
+
+        printf("Nó %d: ", h->dados[i]);
+        if(esquerda(i)>=h->pos){
+            printf("filho esq: vazio, ");
+        }
+        else{
+            printf("filho esq: %d, ", h->dados[esquerda(i)]);
+        }
+        if(direita(i)>=h->pos){
+            printf("filho dir: vazio\n");
+        }
+        else{
+            printf("filho dir: %d\n", h->dados[direita(i)]);
+        }
+        // printf("filho esq: %d, filho dir: %d\n", h->dados[i], h->dados[esquerda(i)], h->dados[direita(i)]);
     }
-    printf("\n");
+    // for(int i = 0; i<h->pos; i++){
+        // printf("%d ", h->dados[i]);
+    // }
 }
 
 void insere(Heap h, int v){
