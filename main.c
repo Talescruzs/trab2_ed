@@ -17,11 +17,18 @@ int main(){
             insere(h, n);
         }
         else if(op==2){
-            printf("Remover %d\n", h->dados[0]);
-            remove_heap(h);
+            int removido = remove_heap(h);
+            if(removido!=0){
+                printf("Remover %d\n", removido);
+            }
         }
         else if(op==3){
-            printf("Imprimir heap\n");
+            if(h->pos==0){
+                printf("Heap vazia\n");
+            }
+            else{
+                printf("Imprimir heap\n");
+            }
             imprime(h);
         }
         else{
