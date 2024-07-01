@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
+// codigo de inspiração: https://noic.com.br/materiais-informatica/curso/aula-16-estruturas-de-dados-iii-heap-fila-de-prioridade/
 Heap cria_heap(){
     Heap h = malloc(sizeof(struct heap));
-    h->tam = 10;
+    h->tam = 2;
     h->dados = malloc(sizeof(int)*h->tam);
     h->pos = 0;
     return h;
@@ -41,7 +41,6 @@ void baixo_cima(Heap h, int pos){
         baixo_cima(h, p);
     }
 }
-
 void cima_baixo(Heap h, int pos){
 
     int d = direita(pos);
@@ -82,8 +81,10 @@ void insere(Heap h, int v){
     
     baixo_cima(h, h->pos);
     h->pos++;
+    if(h->pos>=h->tam){
+        dobra_heap(h);
+    }
 }
-
 int remove_heap(Heap h){
     if(h->pos<=0){
         printf("Heap vazia\n");
@@ -94,5 +95,8 @@ int remove_heap(Heap h){
     troca(&h->dados[h->pos], &h->dados[0]);
     
     cima_baixo(h, 0);
+    if(h->pos<h->tam/2){
+        corta_heap(h);
+    }
     return removido;
 }
