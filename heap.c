@@ -56,8 +56,6 @@ void cima_baixo(Heap h, int pos){
 }
 void imprime(Heap h){
     for(int i=0; i<h->pos; i++){
-        printf("esq %d dir %d pos %d\n", esquerda(i), direita(i), i);
-
         printf("Nó %d: ", h->dados[i]);
         if(esquerda(i)>=h->pos){
             printf("filho esq: vazio, ");
