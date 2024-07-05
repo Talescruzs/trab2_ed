@@ -8,28 +8,29 @@ int main(){
     Heap h = cria_heap();
     int op, n;
     while(1){
-        printf("1 - inserir\n2- remover\n3 - imprimir heap\n");
+        printf("1 - inserir\n2 - remover\n3 - imprimir heap\n");
         scanf("%d", &op);
         if(op==1){
-            printf("Digite valor:\n");
+            printf("\nDigite valor:\n");
             scanf("%d", &n);
-            printf("Inserir %d\n", n);
+            printf("Inserir %d\n\n", n);
             insere(h, n);
         }
         else if(op==2){
             int removido = remove_heap(h);
             if(removido!=0){
-                printf("Remover %d\n", removido);
+                printf("\nRemover %d\n\n", removido);
             }
         }
         else if(op==3){
             if(h->pos==0){
-                printf("Heap vazia\n");
+                printf("\nHeap vazia\n");
             }
             else{
-                printf("Imprimir heap\n");
+                printf("\nImprimir heap\n");
             }
             imprime(h);
+            printf("\n");
         }
         else{
             break;
