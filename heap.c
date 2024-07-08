@@ -79,13 +79,10 @@ void insere(Heap h, int v){
     
     baixo_cima(h, h->pos);
     h->pos++;
-    if(h->pos>=h->tam){
-        dobra_heap(h);
-    }
 }
 int remove_heap(Heap h){
     if(h->pos<=0){
-        printf("\nHeap vazia\n\n");
+        printf("Heap vazia\n");
         return 0;
     }
     int removido = h->dados[0];
