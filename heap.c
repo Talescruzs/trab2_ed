@@ -82,7 +82,7 @@ void insere(Heap h, int v){
 }
 int remove_heap(Heap h){
     if(h->pos<=0){
-        printf("Heap vazia\n");
+        printf("\nHeap vazia\n\n");
         return 0;
     }
     int removido = h->dados[0];
